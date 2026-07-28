@@ -57,11 +57,13 @@ while True:
         nombre = input("Ingrese el nombre del cliente: ")
         telefono = input("Ingrese el número de teléfono del cliente: ")
         trabajo = input("Ingrese el tipo de trabajo de solicitado: ")
+        precio = float(input("Ingrese el precio del trabajo: "))
         estado = "pendiente"
         cliente = {
             "nombre": nombre,
             "telefono": telefono,
             "trabajo": trabajo,
+            "precio": precio,  
             "estado": estado
         }
         clientes.append(cliente)
@@ -78,6 +80,14 @@ while True:
             print("Teléfono: " + cliente["telefono"])
             print("Trabajo: " + cliente["trabajo"])
             print("Estado: " + cliente.get("estado", "pendiente"))
+            
+            if cliente.get("precio",0) > 0:
+                precio_formateado = f"{cliente['precio']:,.0f}".replace(",", ".")
+                print("Precio: $" + precio_formateado)
+            else:
+                print("Precio: Sin Cargar")
+
+            print("--------------------------")
     elif opcion == "3":
         cambiar_estado()
     elif opcion == "4":
