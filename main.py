@@ -41,6 +41,38 @@ def cambiar_estado():
     guardar_clientes()
 
     print("Estado actualizado correctamente.")
+    
+def ver_resumen():
+        total_clientes = len(clientes)
+        pendientes = 0
+        en_proceso = 0
+        finalizados = 0
+        entregados = 0
+        ingresos = 0
+        for cliente in clientes:
+            if cliente.get("estado") == "pendiente":
+                pendientes += 1
+            elif cliente.get("estado") == "en proceso":
+                en_proceso += 1
+            elif cliente.get("estado") == "finalizado":
+                finalizados += 1
+            elif cliente.get("estado") == "entregado":
+                entregados += 1
+            ingresos += cliente.get("precio", 0)
+            ingresos_formateados = f"{ingresos:,.0f}".replace(",", ".")
+        print()
+        print("===========================================")
+        print("                 RESUMEN PRINTFLOW")
+        print("===========================================")
+        print("Total de clientes registrados:", total_clientes)
+        print()
+        print("Clientes pendientes:", pendientes)
+        print("Clientes en proceso:", en_proceso)
+        print("Clientes finalizados:", finalizados)
+        print("Clientes entregados:", entregados)
+        print()
+        print("Ingresos totales: $" + ingresos_formateados)
+        print("===========================================")
 while True:
     print("==========================================")
     print("              PRINTFLOW")
@@ -50,7 +82,8 @@ while True:
     print("1. Registrar cliente")
     print("2. Mostrar clientes")
     print("3. Cambiar estado")
-    print("4. Salir")
+    print("4. Ver resumen")
+    print("5. Salir")
     opcion = input("Seleccione una opción: ")
 
     if opcion == "1":
@@ -91,6 +124,8 @@ while True:
     elif opcion == "3":
         cambiar_estado()
     elif opcion == "4":
+        ver_resumen()
+    elif opcion == "5":
         print("Cerrando el PrintFlow.")
         break
     else:
