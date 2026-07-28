@@ -1,4 +1,14 @@
-clientes = []
+import json
+def cargar_clientes():
+    try:
+        with open("clientes.json", "r") as archivo:
+            return json.load(archivo)
+    except:
+        return []
+clientes = cargar_clientes()
+def guardar_clientes():
+    with open("clientes.json", "w") as archivo:
+        json.dump(clientes, archivo, indent=4)
 while True:
     print("==========================================")
     print("              PRINTFLOW")
@@ -13,13 +23,14 @@ while True:
     if opcion == "1":
         nombre = input("Ingrese el nombre del cliente: ")
         telefono = input("Ingrese el número de teléfono del cliente: ")
-        trabajo = input("Ingrese el tipo de trabajo de impresión: ")
+        trabajo = input("Ingrese el tipo de trabajo de solicitado: ")
         cliente = {
             "nombre": nombre,
             "telefono": telefono,
             "trabajo": trabajo
         }
         clientes.append(cliente)
+        guardar_clientes()
         print()
         print("Cliente registrado correctamente.")
         
