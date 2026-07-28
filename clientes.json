@@ -17,5 +17,12 @@
         "trabajo": "Agenda Personalizada dia de la madre",
         "precio": 15000.0,
         "estado": "pendiente"
+    },
+    {
+        "nombre": "Miriam 2",
+        "telefono": "123",
+        "trabajo": "test",
+        "precio": 123.0,
+        "estado": "pendiente"
     }
 ]
