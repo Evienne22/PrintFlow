@@ -24,10 +24,12 @@ while True:
         nombre = input("Ingrese el nombre del cliente: ")
         telefono = input("Ingrese el número de teléfono del cliente: ")
         trabajo = input("Ingrese el tipo de trabajo de solicitado: ")
+        estado = "pendiente"
         cliente = {
             "nombre": nombre,
             "telefono": telefono,
-            "trabajo": trabajo
+            "trabajo": trabajo,
+            "estado": estado
         }
         clientes.append(cliente)
         guardar_clientes()
@@ -42,6 +44,7 @@ while True:
             print("Nombre: " + cliente["nombre"])
             print("Teléfono: " + cliente["telefono"])
             print("Trabajo: " + cliente["trabajo"])
+            print("Estado: " + cliente.get("estado", "pendiente"))
     elif opcion == "3":
         print("Cerrando el PrintFlow.")
         break
