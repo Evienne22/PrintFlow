@@ -12,7 +12,14 @@ while True:
 
     if opcion == "1":
         nombre = input("Ingrese el nombre del cliente: ")
-        clientes.append(nombre)
+        telefono = input("Ingrese el número de teléfono del cliente: ")
+        trabajo = input("Ingrese el tipo de trabajo de impresión: ")
+        cliente = {
+            "nombre": nombre,
+            "telefono": telefono,
+            "trabajo": trabajo
+        }
+        clientes.append(cliente)
         print()
         print("Cliente registrado correctamente.")
         
@@ -20,7 +27,10 @@ while True:
         print()
         print("Lista de clientes:")
         for cliente in clientes:
-            print("- " + cliente)
+            print("--------------------------")
+            print("Nombre: " + cliente["nombre"])
+            print("Teléfono: " + cliente["telefono"])
+            print("Trabajo: " + cliente["trabajo"])
     elif opcion == "3":
         print("Cerrando el PrintFlow.")
         break
