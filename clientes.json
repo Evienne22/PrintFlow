@@ -2,12 +2,13 @@
     {
         "nombre": "Diego",
         "telefono": "11223344",
-        "trabajo": "Agenda Personalizada"
+        "trabajo": "Agenda Personalizada",
+        "estado": "en proceso"
     },
     {
         "nombre": "Juan",
         "telefono": "66778899",
         "trabajo": "Pines 42mm",
-        "estado": "pendiente"
+        "estado": "completado"
     }
 ]

@@ -9,6 +9,38 @@ clientes = cargar_clientes()
 def guardar_clientes():
     with open("clientes.json", "w") as archivo:
         json.dump(clientes, archivo, indent=4)
+
+def cambiar_estado():
+    print("Clientes Disponibles:")
+    
+    for i, cliente in enumerate(clientes):
+        print(i +1,"-", cliente["nombre"])
+        
+    seleccion =int(input("Seleccione el cliente: "))
+
+    cliente = clientes[seleccion - 1]
+
+    print("Estado actual:", cliente.get("estado", "pendiente"))
+
+    print("1. Pendiente")
+    print("2. En proceso")
+    print("3. Finalizado")
+    print("4. Entregado")
+
+    estado = input("Seleccione el nuevo estado: ")
+
+    estados= {
+    "1": "pendiente",
+    "2": "en proceso",
+    "3": "finalizado",
+    "4": "entregado"
+}
+
+    cliente["estado"] = estados.get(estado, "pendiente")
+
+    guardar_clientes()
+
+    print("Estado actualizado correctamente.")
 while True:
     print("==========================================")
     print("              PRINTFLOW")
@@ -17,7 +49,8 @@ while True:
     print()
     print("1. Registrar cliente")
     print("2. Mostrar clientes")
-    print("3. Salir")
+    print("3. Cambiar estado")
+    print("4. Salir")
     opcion = input("Seleccione una opción: ")
 
     if opcion == "1":
@@ -46,6 +79,8 @@ while True:
             print("Trabajo: " + cliente["trabajo"])
             print("Estado: " + cliente.get("estado", "pendiente"))
     elif opcion == "3":
+        cambiar_estado()
+    elif opcion == "4":
         print("Cerrando el PrintFlow.")
         break
     else:
