@@ -146,8 +146,17 @@ def eliminar_cliente():
        
     for i, cliente in enumerate(clientes):
         print(i + 1, "-", cliente["nombre"])
+        
+    try:    
+        seleccion = int(input("Seleccione el cliente a eliminar: "))
     
-    seleccion = int(input("Seleccione el cliente a eliminar: "))
+        if seleccion < 1 or seleccion > len(clientes):
+            print("Selección inválida.")
+            return
+    
+    except ValueError:
+        print("Ingrese un número válido.")
+        return
 
     cliente = clientes[seleccion - 1]
         
