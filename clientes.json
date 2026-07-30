@@ -3,12 +3,19 @@
         "nombre": "Diego",
         "telefono": "11223344",
         "trabajo": "Agenda Personalizada",
-        "estado": "en proceso"
+        "estado": "entregado"
     },
     {
         "nombre": "Juan",
         "telefono": "66778899",
         "trabajo": "Pines 42mm",
-        "estado": "en proceso"
+        "estado": "pendiente"
+    },
+    {
+        "nombre": "Marcela",
+        "telefono": "123456789123",
+        "trabajo": "Calendario",
+        "precio": 150000.0,
+        "estado": "pendiente"
     }
 ]

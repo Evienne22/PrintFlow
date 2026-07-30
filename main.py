@@ -15,11 +15,18 @@ def cambiar_estado():
     
     for i, cliente in enumerate(clientes):
         print(i +1,"-", cliente["nombre"])
-        
-    seleccion =int(input("Seleccione el cliente: "))
-
+    
+    try:
+        seleccion = int(input("Seleccione el cliente: "))
+        if seleccion < 1 or seleccion > len(clientes):
+            print("Selección inválida.")
+            return
+    
+    except ValueError:
+        print("Ingrese un número válido.")
+        return
     cliente = clientes[seleccion - 1]
-
+    
     print("Estado actual:", cliente.get("estado", "pendiente"))
 
     print("1. Pendiente")
@@ -35,12 +42,12 @@ def cambiar_estado():
     "3": "finalizado",
     "4": "entregado"
 }
-
-    cliente["estado"] = estados.get(estado, "pendiente")
-
-    guardar_clientes()
-
-    print("Estado actualizado correctamente.")
+    if estado in estados:
+        cliente["estado"] = estados[estado]
+        guardar_clientes()
+        print("Estado actualizado correctamente.")
+    else:
+        print("Selección inválida. Seleccione una opción válida entre 1 y 4.")
     
 def ver_resumen():
         total_clientes = len(clientes)
@@ -105,10 +112,18 @@ def editar_cliente():
     for i, cliente in enumerate(clientes): 
     
         print(i + 1, "-", cliente["nombre"])
+             
+    try:
+        seleccion = int(input("Seleccione el cliente: "))
+        if seleccion < 1 or seleccion > len(clientes):
+            print("Selección inválida.")
+            return
     
-    seleccion = int(input("Seleccione el cliente: "))
+    except ValueError:
+        print("Ingrese un número válido.")
+        return
     cliente = clientes[seleccion - 1]
-    
+
     print()
     print("Cliente Seleccionado:")
     print("Nombre:", cliente["nombre"])
@@ -226,21 +241,15 @@ while True:
             print("--------------------------")
     elif opcion == "3":
         cambiar_estado()
-        print(">>> Entro a la Opcion 3 <<<")
     elif opcion == "4":
-        print(">>> Entro a la Opcion 4 <<<")
         ver_resumen()
     elif opcion == "5":
-        print(">>> Entro a la Opcion 5 <<<")
         buscar_cliente()
     elif opcion == "6":
-        print(">>> Entro a la Opcion 6 <<<")
         editar_cliente()
     elif opcion == "7":
-        print(">>> Entro a la Opcion 7 <<<")
         eliminar_cliente()
-    elif opcion == "8":
-        print(">>> Entro a la Opcion 8 <<<")    
+    elif opcion == "8":  
         print("Cerrando el PrintFlow.")
         break
     else:
