@@ -59,7 +59,7 @@ def ver_resumen():
             elif cliente.get("estado") == "entregado":
                 entregados += 1
             ingresos += cliente.get("precio", 0)
-            ingresos_formateados = f"{ingresos:,.0f}".replace(",", ".")
+            ingresos_formateados = f"{ingresos:,.0f}".replace(",", ".") 
         print()
         print("===========================================")
         print("                 RESUMEN PRINTFLOW")
@@ -73,6 +73,32 @@ def ver_resumen():
         print()
         print("Ingresos totales: $" + ingresos_formateados)
         print("===========================================")
+ 
+def buscar_cliente():
+        nombre_buscar = input("Ingrese el nombre del cliente: ")
+    
+        encontrado = False
+    
+        for cliente in clientes:
+           if cliente["nombre"].lower() == nombre_buscar.lower():
+            print()
+            print("===========================================")
+            print("Nombre:", cliente["nombre"])
+            print("Teléfono:", cliente["telefono"])
+            print("Trabajo:", cliente["trabajo"])
+            print("Estado:", cliente.get("estado", "pendiente"))
+            
+            if cliente.get("precio",0) > 0:
+                precio_formateado = f"{cliente['precio']:,.0f}".replace(",", ".")
+                print("Precio: $" + precio_formateado)
+            else:
+                print("Precio: Sin Cargar")
+            print("===========================================")
+            
+            encontrado = True
+            break
+        if not encontrado:
+         print("Cliente no encontrado.")
 while True:
     print("==========================================")
     print("              PRINTFLOW")
@@ -83,7 +109,8 @@ while True:
     print("2. Mostrar clientes")
     print("3. Cambiar estado")
     print("4. Ver resumen")
-    print("5. Salir")
+    print("5. Buscar cliente")
+    print("6. Salir")
     opcion = input("Seleccione una opción: ")
 
     if opcion == "1":
@@ -124,8 +151,11 @@ while True:
     elif opcion == "3":
         cambiar_estado()
     elif opcion == "4":
+        print(">>> Entro a la Opcion 4 <<<")
         ver_resumen()
     elif opcion == "5":
+        buscar_cliente()
+    elif opcion == "6":
         print("Cerrando el PrintFlow.")
         break
     else:
