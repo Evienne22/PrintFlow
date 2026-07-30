@@ -99,6 +99,49 @@ def buscar_cliente():
             break
         if not encontrado:
          print("Cliente no encontrado.")
+def editar_cliente():
+    print("Clientes Disponibles:")
+    
+    for i, cliente in enumerate(clientes): 
+    
+        print(i + 1, "-", cliente["nombre"])
+    
+    seleccion = int(input("Seleccione el cliente: "))
+    cliente = clientes[seleccion - 1]
+    
+    print()
+    print("Cliente Seleccionado:")
+    print("Nombre:", cliente["nombre"])
+    print("Teléfono:", cliente["telefono"])
+    print("Trabajo:", cliente["trabajo"])
+    print("Precio:", cliente.get("precio", 0))
+    print("Estado:", cliente.get("estado", "pendiente"))
+    
+    nuevo_nombre= input("Ingrese el nuevo nombre (ENTER para mantener): ")
+    if nuevo_nombre:
+        cliente["nombre"] = nuevo_nombre
+        
+    nuevo_telefono = input("Ingrese el nuevo teléfono (ENTER para mantener): ")
+    if nuevo_telefono:
+        cliente["telefono"] = nuevo_telefono
+        
+    nuevo_trabajo = input("Ingrese el nuevo trabajo (ENTER para mantener): ")
+    if nuevo_trabajo:
+        cliente["trabajo"] = nuevo_trabajo
+        
+    nuevo_precio = input("Ingrese el nuevo precio (ENTER para mantener): ")
+    if nuevo_precio:
+        try:
+            cliente["precio"] = float(nuevo_precio)
+    
+            cliente["precio"] = float(nuevo_precio)
+        except ValueError:
+            print("Precio inválido. Se mantendrá el valor anterior.")
+        
+    guardar_clientes()
+    print("Cliente actualizado correctamente.")
+        
+       
 while True:
     print("==========================================")
     print("              PRINTFLOW")
@@ -110,7 +153,8 @@ while True:
     print("3. Cambiar estado")
     print("4. Ver resumen")
     print("5. Buscar cliente")
-    print("6. Salir")
+    print("6. Editar Cliente")
+    print("7. Salir")
     opcion = input("Seleccione una opción: ")
 
     if opcion == "1":
@@ -156,6 +200,10 @@ while True:
     elif opcion == "5":
         buscar_cliente()
     elif opcion == "6":
+        print(">>> Entro a la Opcion 6 <<<")
+        editar_cliente()
+    elif opcion == "7":
+        print(">>> Entro a la Opcion 7 <<<")
         print("Cerrando el PrintFlow.")
         break
     else:
