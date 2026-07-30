@@ -10,19 +10,5 @@
         "telefono": "66778899",
         "trabajo": "Pines 42mm",
         "estado": "en proceso"
-    },
-    {
-        "nombre": "Miriam",
-        "telefono": "3471586298",
-        "trabajo": "Agenda Personalizada dia de la madre",
-        "precio": 15000.0,
-        "estado": "pendiente"
-    },
-    {
-        "nombre": "Miriam Dise\u00f1o",
-        "telefono": "123",
-        "trabajo": "test",
-        "precio": 12.0,
-        "estado": "pendiente"
     }
 ]

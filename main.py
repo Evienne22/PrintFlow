@@ -141,7 +141,29 @@ def editar_cliente():
     guardar_clientes()
     print("Cliente actualizado correctamente.")
         
+def eliminar_cliente():
+    print("Clientes Disponibles:")
        
+    for i, cliente in enumerate(clientes):
+        print(i + 1, "-", cliente["nombre"])
+    
+    seleccion = int(input("Seleccione el cliente a eliminar: "))
+
+    cliente = clientes[seleccion - 1]
+        
+    print()
+    print("Cliente Seleccionado:") 
+    print("Nombre:", cliente["nombre"])
+    print("Trabajo:", cliente["trabajo"])
+        
+    confirmacion = input("¿Está seguro de eliminar este cliente? (s/n): ")
+       
+    if confirmacion.lower() == "s":
+            del clientes[seleccion - 1]
+            guardar_clientes()
+            print("Cliente eliminado correctamente.")
+    else:
+            print("Operación cancelada.")
 while True:
     print("==========================================")
     print("              PRINTFLOW")
@@ -154,7 +176,8 @@ while True:
     print("4. Ver resumen")
     print("5. Buscar cliente")
     print("6. Editar Cliente")
-    print("7. Salir")
+    print("7. Eliminar cliente")
+    print("8. Salir")
     opcion = input("Seleccione una opción: ")
 
     if opcion == "1":
@@ -194,16 +217,21 @@ while True:
             print("--------------------------")
     elif opcion == "3":
         cambiar_estado()
+        print(">>> Entro a la Opcion 3 <<<")
     elif opcion == "4":
         print(">>> Entro a la Opcion 4 <<<")
         ver_resumen()
     elif opcion == "5":
+        print(">>> Entro a la Opcion 5 <<<")
         buscar_cliente()
     elif opcion == "6":
         print(">>> Entro a la Opcion 6 <<<")
         editar_cliente()
     elif opcion == "7":
         print(">>> Entro a la Opcion 7 <<<")
+        eliminar_cliente()
+    elif opcion == "8":
+        print(">>> Entro a la Opcion 8 <<<")    
         print("Cerrando el PrintFlow.")
         break
     else:
