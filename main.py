@@ -9,6 +9,23 @@ clientes = cargar_clientes()
 def guardar_clientes():
     with open("clientes.json", "w") as archivo:
         json.dump(clientes, archivo, indent=4)
+def pedir_texto(mensaje):
+    while True:
+        texto = input(mensaje)
+
+        if texto.strip() == "":
+            print("El valor no puede estar vacío.")
+        else:
+            break
+
+    return texto
+
+
+def cambiar_estado():
+    print("Clientes Disponibles:")
+    
+    for i, cliente in enumerate(clientes):
+        print(i + 1, "-", cliente["nombre"])
 
 def cambiar_estado():
     print("Clientes Disponibles:")
@@ -205,24 +222,9 @@ while True:
     opcion = input("Seleccione una opción: ")
 
     if opcion == "1":
-        while True:
-            nombre = input("Ingrese el nombre del cliente: ")
-            if nombre.strip()== "":
-                print("El nombre no puede estar vacío.")
-            else:
-                break
-        while True:
-            telefono = input("Ingrese el número de teléfono del cliente: ")
-            if telefono.strip() == "":
-                print("El número de teléfono no puede estar vacío.")
-            else:
-                break
-        while True:
-            trabajo = input("Ingrese el tipo de trabajo solicitado: ")
-            if trabajo.strip() == "" :
-                print("El tipo de trabajo no puede estar vacío")
-            else:
-                break
+        nombre = pedir_texto("Ingrese el nombre del cliente: ")
+        telefono = pedir_texto("Ingrese el número de teléfono del cliente: ")
+        trabajo = pedir_texto("Ingrese el tipo de trabajo solicitado: ")
         while True:
             precio = input("Ingrese el precio del trabajo: ")
             
@@ -292,3 +294,8 @@ while True:
         break
     else:
         print("Opción inválida. Por favor, seleccione una opción válida.")
+        
+        
+        
+        
+    
