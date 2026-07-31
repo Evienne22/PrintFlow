@@ -66,7 +66,8 @@ def ver_resumen():
             elif cliente.get("estado") == "entregado":
                 entregados += 1
             ingresos += cliente.get("precio", 0)
-            ingresos_formateados = f"{ingresos:,.0f}".replace(",", ".") 
+            
+        ingresos_formateados = f"{ingresos:,.0f}".replace(",", ".") 
         print()
         print("===========================================")
         print("                 RESUMEN PRINTFLOW")
@@ -132,24 +133,23 @@ def editar_cliente():
     print("Precio:", cliente.get("precio", 0))
     print("Estado:", cliente.get("estado", "pendiente"))
     
-    nuevo_nombre= input("Ingrese el nuevo nombre (ENTER para mantener): ")
+    nuevo_nombre= input("Ingrese el nuevo nombre: ")
     if nuevo_nombre:
         cliente["nombre"] = nuevo_nombre
         
-    nuevo_telefono = input("Ingrese el nuevo teléfono (ENTER para mantener): ")
+    nuevo_telefono = input("Ingrese el nuevo teléfono: ")
     if nuevo_telefono:
         cliente["telefono"] = nuevo_telefono
         
-    nuevo_trabajo = input("Ingrese el nuevo trabajo (ENTER para mantener): ")
+    nuevo_trabajo = input("Ingrese el nuevo trabajo: ")
     if nuevo_trabajo:
         cliente["trabajo"] = nuevo_trabajo
         
-    nuevo_precio = input("Ingrese el nuevo precio (ENTER para mantener): ")
+    nuevo_precio = input("Ingrese el nuevo precio: ")
     if nuevo_precio:
         try:
             cliente["precio"] = float(nuevo_precio)
     
-            cliente["precio"] = float(nuevo_precio)
         except ValueError:
             print("Precio inválido. Se mantendrá el valor anterior.")
         
@@ -205,11 +205,43 @@ while True:
     opcion = input("Seleccione una opción: ")
 
     if opcion == "1":
-        nombre = input("Ingrese el nombre del cliente: ")
-        telefono = input("Ingrese el número de teléfono del cliente: ")
-        trabajo = input("Ingrese el tipo de trabajo de solicitado: ")
-        precio = float(input("Ingrese el precio del trabajo: "))
+        while True:
+            nombre = input("Ingrese el nombre del cliente: ")
+            if nombre.strip()== "":
+                print("El nombre no puede estar vacío.")
+            else:
+                break
+        while True:
+            telefono = input("Ingrese el número de teléfono del cliente: ")
+            if telefono.strip() == "":
+                print("El número de teléfono no puede estar vacío.")
+            else:
+                break
+        while True:
+            trabajo = input("Ingrese el tipo de trabajo solicitado: ")
+            if trabajo.strip() == "" :
+                print("El tipo de trabajo no puede estar vacío")
+            else:
+                break
+        while True:
+            precio = input("Ingrese el precio del trabajo: ")
+            
+            if precio.strip() == "" :
+                print("El precio no puede estar vacío.")
+                continue
+            
+            try: 
+                precio = float(precio)
+        
+            except ValueError:
+                print("Precio inválido. Por favor, ingrese un número válido.")
+                continue
+            if precio < 0:
+                print("El precio no puede ser negativo.")
+                continue
+            break
         estado = "pendiente"
+        
         cliente = {
             "nombre": nombre,
             "telefono": telefono,
@@ -218,14 +250,20 @@ while True:
             "estado": estado
         }
         clientes.append(cliente)
+        
         guardar_clientes()
+        
         print()
+        
         print("Cliente registrado correctamente.")
         
     elif opcion == "2":
         print()
+        
         print("Lista de clientes:")
+        
         for cliente in clientes:
+            
             print("--------------------------")
             print("Nombre: " + cliente["nombre"])
             print("Teléfono: " + cliente["telefono"])

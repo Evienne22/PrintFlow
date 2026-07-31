@@ -17,5 +17,19 @@
         "trabajo": "Calendario",
         "precio": 150000.0,
         "estado": "pendiente"
+    },
+    {
+        "nombre": "2",
+        "telefono": "123546123",
+        "trabajo": "3",
+        "precio": 3.0,
+        "estado": "pendiente"
+    },
+    {
+        "nombre": "Lira",
+        "telefono": "123456",
+        "trabajo": "agenda",
+        "precio": 10000.0,
+        "estado": "pendiente"
     }
 ]
