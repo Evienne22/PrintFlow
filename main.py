@@ -9,6 +9,50 @@ clientes = cargar_clientes()
 def guardar_clientes():
     with open("clientes.json", "w") as archivo:
         json.dump(clientes, archivo, indent=4)
+    
+def pedir_telefono(mensaje):
+    while True:
+        telefono = input(mensaje)
+        if telefono.strip() == "":
+            print("El teléfono solo puede contener números.")
+        elif not telefono.isdigit():
+            print("Ingrese un número válido.")
+        else:
+            return telefono
+def pedir_precio(mensaje):
+    while True:
+        precio = input(mensaje)
+        if precio.strip() == "":
+            print("El precio no puede estar vacío.")
+            continue
+        else:
+           
+            try:
+                precio = float(precio)
+                
+                if precio < 0:
+                    print("El precio no puede ser negativo.")
+                    continue
+                return precio
+            
+            except ValueError:
+                print("Precio inválido. Por favor, ingrese un número válido.") 
+                      
+def validar_precio(precio):
+    if precio.strip() == "":
+        return False
+
+    try:
+        precio = float(precio)
+
+        if precio < 0:
+            return False
+
+        return True
+
+    except ValueError:
+        return False
+    
 def pedir_texto(mensaje):
     while True:
         texto = input(mensaje)
@@ -19,7 +63,6 @@ def pedir_texto(mensaje):
             break
 
     return texto
-
 
 def cambiar_estado():
     print("Clientes Disponibles:")
@@ -124,6 +167,14 @@ def buscar_cliente():
             break
         if not encontrado:
          print("Cliente no encontrado.")
+def validar_telefono(telefono):
+    if telefono.strip() =="":
+        return False   
+    if not telefono.isdigit():
+        return False
+    else:
+        return True 
+    
 def editar_cliente():
     print("Clientes Disponibles:")
     
@@ -156,18 +207,21 @@ def editar_cliente():
         
     nuevo_telefono = input("Ingrese el nuevo teléfono: ")
     if nuevo_telefono:
-        cliente["telefono"] = nuevo_telefono
-        
+        if validar_telefono(nuevo_telefono):
+            cliente["telefono"] = nuevo_telefono
+        else:
+            print("Teléfono inválido. Se mantendrá el valor anterior.")
+
     nuevo_trabajo = input("Ingrese el nuevo trabajo: ")
     if nuevo_trabajo:
         cliente["trabajo"] = nuevo_trabajo
         
     nuevo_precio = input("Ingrese el nuevo precio: ")
+
     if nuevo_precio:
-        try:
+        if validar_precio(nuevo_precio):
             cliente["precio"] = float(nuevo_precio)
-    
-        except ValueError:
+        else:
             print("Precio inválido. Se mantendrá el valor anterior.")
         
     guardar_clientes()
@@ -223,25 +277,9 @@ while True:
 
     if opcion == "1":
         nombre = pedir_texto("Ingrese el nombre del cliente: ")
-        telefono = pedir_texto("Ingrese el número de teléfono del cliente: ")
+        telefono = pedir_telefono("Ingrese el número de teléfono del cliente: ")
         trabajo = pedir_texto("Ingrese el tipo de trabajo solicitado: ")
-        while True:
-            precio = input("Ingrese el precio del trabajo: ")
-            
-            if precio.strip() == "" :
-                print("El precio no puede estar vacío.")
-                continue
-            
-            try: 
-                precio = float(precio)
-        
-            except ValueError:
-                print("Precio inválido. Por favor, ingrese un número válido.")
-                continue
-            if precio < 0:
-                print("El precio no puede ser negativo.")
-                continue
-            break
+        precio = pedir_precio("Ingrese el precio del trabajo: ")
         estado = "pendiente"
         
         cliente = {

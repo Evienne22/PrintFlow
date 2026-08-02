@@ -1,14 +1,15 @@
 [
     {
         "nombre": "Diego",
-        "telefono": "11223344",
-        "trabajo": "Agenda Personalizada",
-        "estado": "entregado"
+        "telefono": "12341456123",
+        "trabajo": "Agenda",
+        "estado": "en proceso",
+        "precio": 100000.0
     },
     {
         "nombre": "Juan",
-        "telefono": "66778899",
-        "trabajo": "Pines 42mm",
+        "telefono": "123456789",
+        "trabajo": "Pines",
         "estado": "pendiente"
     },
     {
@@ -30,6 +31,13 @@
         "telefono": "12324652163546",
         "trabajo": "Almanaque",
         "precio": 12000.0,
+        "estado": "pendiente"
+    },
+    {
+        "nombre": "zazu",
+        "telefono": "12321654612",
+        "trabajo": "carteles",
+        "precio": 1000.0,
         "estado": "pendiente"
     }
 ]
