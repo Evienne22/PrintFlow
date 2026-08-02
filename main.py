@@ -69,45 +69,6 @@ def cambiar_estado():
     
     for i, cliente in enumerate(clientes):
         print(i + 1, "-", cliente["nombre"])
-
-def cambiar_estado():
-    print("Clientes Disponibles:")
-    
-    for i, cliente in enumerate(clientes):
-        print(i +1,"-", cliente["nombre"])
-    
-    try:
-        seleccion = int(input("Seleccione el cliente: "))
-        if seleccion < 1 or seleccion > len(clientes):
-            print("Selección inválida.")
-            return
-    
-    except ValueError:
-        print("Ingrese un número válido.")
-        return
-    cliente = clientes[seleccion - 1]
-    
-    print("Estado actual:", cliente.get("estado", "pendiente"))
-
-    print("1. Pendiente")
-    print("2. En proceso")
-    print("3. Finalizado")
-    print("4. Entregado")
-
-    estado = input("Seleccione el nuevo estado: ")
-
-    estados= {
-    "1": "pendiente",
-    "2": "en proceso",
-    "3": "finalizado",
-    "4": "entregado"
-}
-    if estado in estados:
-        cliente["estado"] = estados[estado]
-        guardar_clientes()
-        print("Estado actualizado correctamente.")
-    else:
-        print("Selección inválida. Seleccione una opción válida entre 1 y 4.")
     
 def ver_resumen():
         total_clientes = len(clientes)
@@ -198,32 +159,51 @@ def editar_cliente():
     print("Nombre:", cliente["nombre"])
     print("Teléfono:", cliente["telefono"])
     print("Trabajo:", cliente["trabajo"])
-    print("Precio:", cliente.get("precio", 0))
+    if cliente.get("precio", 0) > 0:
+                print("Precio: $", cliente["precio"])
+    else:
+        print("Precio: Sin Cargar")
+     
     print("Estado:", cliente.get("estado", "pendiente"))
     
     nuevo_nombre= input("Ingrese el nuevo nombre: ")
     if nuevo_nombre:
         cliente["nombre"] = nuevo_nombre
         
-    nuevo_telefono = input("Ingrese el nuevo teléfono: ")
-    if nuevo_telefono:
-        if validar_telefono(nuevo_telefono):
+    while True:
+        nuevo_telefono = input("Ingrese el nuevo teléfono: ")
+
+        if nuevo_telefono == "":
+            break
+
+        elif validar_telefono(nuevo_telefono):
             cliente["telefono"] = nuevo_telefono
+            break
+
         else:
-            print("Teléfono inválido. Se mantendrá el valor anterior.")
+            print("Teléfono inválido. Ingrese un número válido.")
+
 
     nuevo_trabajo = input("Ingrese el nuevo trabajo: ")
+
     if nuevo_trabajo:
         cliente["trabajo"] = nuevo_trabajo
-        
-    nuevo_precio = input("Ingrese el nuevo precio: ")
 
-    if nuevo_precio:
-        if validar_precio(nuevo_precio):
+
+    while True:
+        nuevo_precio = input("Ingrese el nuevo precio: ")
+
+        if nuevo_precio == "":
+            break
+
+        elif validar_precio(nuevo_precio):
             cliente["precio"] = float(nuevo_precio)
+            break
+
         else:
-            print("Precio inválido. Se mantendrá el valor anterior.")
-        
+            print("Precio inválido. Ingrese un número válido.")
+
+
     guardar_clientes()
     print("Cliente actualizado correctamente.")
         

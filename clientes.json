@@ -1,15 +1,15 @@
 [
     {
         "nombre": "Diego",
-        "telefono": "12341456123",
-        "trabajo": "Agenda",
+        "telefono": "123465",
+        "trabajo": "Pines",
         "estado": "en proceso",
-        "precio": 100000.0
+        "precio": 10000.0
     },
     {
         "nombre": "Juan",
-        "telefono": "123456789",
-        "trabajo": "Pines",
+        "telefono": "123",
+        "trabajo": "pines",
         "estado": "pendiente"
     },
     {
