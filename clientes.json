@@ -1,10 +1,10 @@
 [
     {
         "nombre": "Diego",
-        "telefono": "123465",
+        "telefono": "12345678910",
         "trabajo": "Pines",
         "estado": "en proceso",
-        "precio": 10000.0
+        "precio": 100000.0
     },
     {
         "nombre": "Juan",

@@ -133,9 +133,11 @@ def validar_telefono(telefono):
         return False   
     if not telefono.isdigit():
         return False
-    else:
-        return True 
+    if len(telefono) < 7 or len(telefono) > 15:
+        return False
     
+    return True
+
 def editar_cliente():
     print("Clientes Disponibles:")
     
