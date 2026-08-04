@@ -20,5 +20,14 @@
         "precio": 10000.0,
         "estado": "entregado",
         "fecha_entrega": "04/08/2026"
+    },
+    {
+        "nombre": "FechaTest",
+        "telefono": "12345678913",
+        "trabajo": "Folletos",
+        "precio": 1000.0,
+        "estado": "entregado",
+        "fecha_creacion": "04/08/2026",
+        "fecha_entrega": "04/08/2026"
     }
 ]

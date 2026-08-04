@@ -336,7 +336,9 @@ def ver_clientes_archivados():
         print("Nombre:", cliente["nombre"])
         print("Teléfono:", cliente["telefono"])
         print("Trabajo:", cliente["trabajo"])
-        print("Estado:", cliente.get("estado", "entregado"))
+        
+        if cliente.get("fecha_creacion"):
+            print("Fecha creación:", cliente["fecha_creacion"])
         
         if cliente.get("fecha_entrega"):
             print("Fecha entrega: " + cliente["fecha_entrega"])
@@ -409,7 +411,8 @@ while True:
             "telefono": telefono,
             "trabajo": trabajo,
             "precio": precio,  
-            "estado": estado
+            "estado": estado,
+            "fecha_creacion": datetime.now().strftime("%d/%m/%Y")
         }
         clientes.append(cliente)
         
@@ -430,6 +433,10 @@ while True:
             print("Nombre: " + cliente["nombre"])
             print("Teléfono: " + cliente["telefono"])
             print("Trabajo: " + cliente["trabajo"])
+            
+            if cliente.get("fecha_creacion"):
+                print("Fecha creación: " + cliente["fecha_creacion"])
+                
             print("Estado: " + cliente.get("estado", "pendiente"))
             
             if cliente.get("fecha_entrega"):
