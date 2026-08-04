@@ -29,5 +29,14 @@
         "estado": "entregado",
         "fecha_creacion": "04/08/2026",
         "fecha_entrega": "04/08/2026"
+    },
+    {
+        "nombre": "Test1",
+        "telefono": "12345684132",
+        "trabajo": "Tarjetas",
+        "precio": 50000.0,
+        "estado": "entregado",
+        "fecha_creacion": "04/08/2026",
+        "fecha_entrega": "04/08/2026"
     }
 ]

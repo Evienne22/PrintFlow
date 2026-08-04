@@ -121,11 +121,17 @@ def cambiar_estado():
         print("Selección inválida.")
 def ver_resumen():
         total_clientes = len(clientes)
+        total_archivados = len(clientes_archivados)
+        total_historicos = total_clientes + total_archivados
+        
         pendientes = 0
         en_proceso = 0
         finalizados = 0
         entregados = 0
+        
         ingresos = 0
+        ingresos_historicos = 0
+        
         for cliente in clientes:
             if cliente.get("estado") == "pendiente":
                 pendientes += 1
@@ -135,21 +141,33 @@ def ver_resumen():
                 finalizados += 1
             elif cliente.get("estado") == "entregado":
                 entregados += 1
+            
             ingresos += cliente.get("precio", 0)
             
-        ingresos_formateados = f"{ingresos:,.0f}".replace(",", ".") 
+        for cliente in clientes_archivados:
+            ingresos_historicos += cliente.get("precio", 0)
+
+        ingresos_formateados = f"{ingresos:,.0f}".replace(",", ".")
+        historicos_formateados = f"{ingresos_historicos:,.0f}".replace(",", ".") 
+        total_formateados = f"{ingresos + ingresos_historicos:,.0f}".replace(",", ".")
         print()
         print("===========================================")
         print("                 RESUMEN PRINTFLOW")
         print("===========================================")
-        print("Total de clientes registrados:", total_clientes)
+        print("Clientes Activos:", total_clientes)
+        print("Clientes Archivados:", total_archivados)
+        print("Total Histórico:", total_historicos)
+        
         print()
         print("Clientes pendientes:", pendientes)
         print("Clientes en proceso:", en_proceso)
         print("Clientes finalizados:", finalizados)
         print("Clientes entregados:", entregados)
+        
         print()
-        print("Ingresos totales: $" + ingresos_formateados)
+        print("Ingresos activos: $" + ingresos_formateados)
+        print("Ingresos históricos: $" + historicos_formateados)
+        print("Ingresos totales: $" + total_formateados)
         print("===========================================")
  
 def buscar_cliente():
