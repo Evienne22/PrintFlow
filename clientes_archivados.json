@@ -5,5 +5,20 @@
         "trabajo": "Almanaque",
         "precio": 12000.0,
         "estado": "entregado"
+    },
+    {
+        "nombre": "Juan",
+        "telefono": "123",
+        "trabajo": "pines",
+        "estado": "entregado",
+        "fecha_entrega": "04/08/2026"
+    },
+    {
+        "nombre": "Test1",
+        "telefono": "12345683",
+        "trabajo": "Agenda",
+        "precio": 10000.0,
+        "estado": "entregado",
+        "fecha_entrega": "04/08/2026"
     }
 ]

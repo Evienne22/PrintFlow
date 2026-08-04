@@ -1,11 +1,5 @@
 [
     {
-        "nombre": "Juan",
-        "telefono": "123",
-        "trabajo": "pines",
-        "estado": "pendiente"
-    },
-    {
         "nombre": "Marcela",
         "telefono": "123456789123",
         "trabajo": "Calendario",

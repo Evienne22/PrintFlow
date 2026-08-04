@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 def cargar_clientes():
     try:
         with open("clientes.json", "r") as archivo:
@@ -110,6 +111,10 @@ def cambiar_estado():
     }
     if opcion_estados in estado:
         cliente["estado"] = estado[opcion_estados]
+    
+    if cliente["estado"] == "entregado":
+        cliente["fecha_entrega"] = datetime.now().strftime("%d/%m/%Y")
+    
         guardar_clientes()
         print("Estado actualizado correctamente.")
     else:
@@ -263,6 +268,10 @@ def mostrar_entregados():
             print("Nombre: " + cliente["nombre"])
             print("Teléfono: " + cliente["telefono"])
             print("Trabajo: " + cliente["trabajo"])
+            
+            if cliente.get("fecha_entrega"):
+                print("Fecha entrega: " + cliente["fecha_entrega"])
+                
             if cliente.get("precio", 0) > 0:
                 precio_formateado = f"{cliente['precio']:,.0f}".replace(",", ".")
                 print("Precio: $" + precio_formateado)
@@ -399,6 +408,9 @@ while True:
             print("Teléfono: " + cliente["telefono"])
             print("Trabajo: " + cliente["trabajo"])
             print("Estado: " + cliente.get("estado", "pendiente"))
+            
+            if cliente.get("fecha_entrega"):
+                print("Fecha entrega: " + cliente["fecha_entrega"])
             
             if cliente.get("precio",0) > 0:
                 precio_formateado = f"{cliente['precio']:,.0f}".replace(",", ".")
