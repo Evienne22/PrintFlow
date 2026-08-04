@@ -324,7 +324,28 @@ def archivar_clientes_entregados():
             
             print("Cliente archivado correctamente.")
     else:
-            print("Operación cancelada.")        
+            print("Operación cancelada.")
+def ver_clientes_archivados():
+    print("Clientes Archivados:")
+    if not clientes_archivados:
+        print("No hay clientes archivados.")
+        return
+    
+    for cliente in clientes_archivados:
+        print("--------------------------")
+        print("Nombre:", cliente["nombre"])
+        print("Teléfono:", cliente["telefono"])
+        print("Trabajo:", cliente["trabajo"])
+        print("Estado:", cliente.get("estado", "entregado"))
+        
+        if cliente.get("fecha_entrega"):
+            print("Fecha entrega: " + cliente["fecha_entrega"])
+            
+        if cliente.get("precio", 0) > 0:
+            precio_formateado = f"{cliente['precio']:,.0f}".replace(",", ".")
+            print("Precio: $" + precio_formateado)
+        else:
+            print("Precio: Sin Cargar")                   
 def eliminar_cliente():
     print("Clientes Disponibles:")
        
@@ -371,7 +392,9 @@ while True:
     print("6. Editar Cliente")
     print("7. Eliminar cliente")
     print("8. Archivar clientes entregados")
-    print("9. Salir")
+    print("9. Ver clientes archivados")
+    print("10. Salir")
+    print("==========================================")
     opcion = input("Seleccione una opción: ")
 
     if opcion == "1":
@@ -432,6 +455,8 @@ while True:
     elif opcion == "8":  
         archivar_clientes_entregados()
     elif opcion == "9":
+        ver_clientes_archivados()
+    elif opcion == "10":
         print("Cerrando el PrintFlow.")
         break
     else:
