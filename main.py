@@ -69,7 +69,36 @@ def cambiar_estado():
     
     for i, cliente in enumerate(clientes):
         print(i + 1, "-", cliente["nombre"])
+    try:
+        seleccion = int(input("Seleccione el cliente: "))
+    except ValueError:
+        print("Ingrese un número válido.")
+        return
+    if seleccion < 1 or seleccion > len(clientes):
+        print("Selección inválida.")
+        return
+    cliente = clientes[seleccion - 1]
     
+    print("Estado actual del cliente:", cliente.get("estado", "pendiente"))
+    print("Opciones de estado:")    
+    print("1. Pendiente")
+    print("2. En proceso")
+    print("3. Finalizado")
+    print("4. Entregado")
+    opcion_estados = input("Seleccione el nuevo estado: ")
+    estado ={
+        
+        "1": "pendiente",
+        "2": "en proceso",
+        "3": "finalizado",
+        "4": "entregado"
+    }
+    if opcion_estados in estado:
+        cliente["estado"] = estado[opcion_estados]
+        guardar_clientes()
+        print("Estado actualizado correctamente.")
+    else:
+        print("Selección inválida.")
 def ver_resumen():
         total_clientes = len(clientes)
         pendientes = 0
@@ -208,7 +237,67 @@ def editar_cliente():
 
     guardar_clientes()
     print("Cliente actualizado correctamente.")
+    
+def mostrar_entregados():
+    print("Clientes Entregados:")
+    encontrado = False
+    for cliente in clientes:
+        if cliente.get("estado") == "entregado":
+            encontrado = True
+            print("--------------------------")
+            print("Nombre: " + cliente["nombre"])
+            print("Teléfono: " + cliente["telefono"])
+            print("Trabajo: " + cliente["trabajo"])
+            if cliente.get("precio", 0) > 0:
+                precio_formateado = f"{cliente['precio']:,.0f}".replace(",", ".")
+                print("Precio: $" + precio_formateado)
+            else:
+                print("Precio: Sin Cargar")
+    if not encontrado:
+        print("No hay clientes entregados.")
+def archivar_clientes_entregados():
+    print("Clientes Entregados:")
+       
+    clientes_entregados = []
+    
+    for cliente in clientes:
+            if cliente.get("estado") == "entregado":
+                clientes_entregados.append(cliente)
+                
+    if not clientes_entregados:
+            print("No hay clientes entregados para archivar.")
+            return
+    
+    for i, cliente in enumerate(clientes_entregados):
+                    print(i + 1, "-", cliente["nombre"])
+    
+    try:    
+        seleccion = int(input("Seleccione el cliente a archivar: "))
+    
+        if seleccion < 1 or seleccion > len(clientes_entregados):
+            print("Selección inválida.")
+            return
+    
+    except ValueError:
+        print("Ingrese un número válido.")
+        return
+
+    cliente = clientes_entregados[seleccion - 1]
         
+    print()
+    print("Cliente Seleccionado:") 
+    print("Nombre:", cliente["nombre"])
+    print("Trabajo:", cliente["trabajo"])  
+        
+    confirmacion = input("¿Está seguro de archivar este cliente? (s/n): ")
+       
+    if confirmacion.lower() == "s":
+            clientes.remove(cliente)
+            guardar_clientes()
+            
+            print("Cliente archivado correctamente.")
+    else:
+            print("Operación cancelada.")        
 def eliminar_cliente():
     print("Clientes Disponibles:")
        
@@ -254,7 +343,8 @@ while True:
     print("5. Buscar cliente")
     print("6. Editar Cliente")
     print("7. Eliminar cliente")
-    print("8. Salir")
+    print("8. Archivar clientes entregados")
+    print("9. Salir")
     opcion = input("Seleccione una opción: ")
 
     if opcion == "1":
@@ -310,12 +400,10 @@ while True:
     elif opcion == "7":
         eliminar_cliente()
     elif opcion == "8":  
+        archivar_clientes_entregados()
+    elif opcion == "9":
         print("Cerrando el PrintFlow.")
         break
     else:
         print("Opción inválida. Por favor, seleccione una opción válida.")
         
-        
-        
-        
-    

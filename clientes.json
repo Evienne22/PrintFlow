@@ -1,12 +1,5 @@
 [
     {
-        "nombre": "Diego",
-        "telefono": "12345678910",
-        "trabajo": "Pines",
-        "estado": "en proceso",
-        "precio": 100000.0
-    },
-    {
         "nombre": "Juan",
         "telefono": "123",
         "trabajo": "pines",
@@ -31,13 +24,6 @@
         "telefono": "12324652163546",
         "trabajo": "Almanaque",
         "precio": 12000.0,
-        "estado": "pendiente"
-    },
-    {
-        "nombre": "zazu",
-        "telefono": "12321654612",
-        "trabajo": "carteles",
-        "precio": 1000.0,
         "estado": "pendiente"
     }
 ]
