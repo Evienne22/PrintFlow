@@ -5,10 +5,25 @@ def cargar_clientes():
             return json.load(archivo)
     except:
         return []
-clientes = cargar_clientes()
+
+def cargar_clientes_archivados():
+    try:
+        with open("clientes_archivados.json", "r") as archivo:
+            return json.load(archivo)
+    except:
+        return []
+
+def guardar_clientes_archivados():
+    with open("clientes_archivados.json", "w") as archivo:
+        json.dump(clientes_archivados, archivo, indent=4)
+        
 def guardar_clientes():
     with open("clientes.json", "w") as archivo:
         json.dump(clientes, archivo, indent=4)
+
+clientes = cargar_clientes()
+
+clientes_archivados = cargar_clientes_archivados()
     
 def pedir_telefono(mensaje):
     while True:
@@ -292,6 +307,9 @@ def archivar_clientes_entregados():
     confirmacion = input("¿Está seguro de archivar este cliente? (s/n): ")
        
     if confirmacion.lower() == "s":
+            clientes_archivados.append(cliente)
+            guardar_clientes_archivados()
+        
             clientes.remove(cliente)
             guardar_clientes()
             

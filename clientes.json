@@ -18,12 +18,5 @@
         "trabajo": "agenda",
         "precio": 10000.0,
         "estado": "pendiente"
-    },
-    {
-        "nombre": "Tornado",
-        "telefono": "12324652163546",
-        "trabajo": "Almanaque",
-        "precio": 12000.0,
-        "estado": "pendiente"
     }
 ]

@@ -1,0 +1,9 @@
+[
+    {
+        "nombre": "Tornado",
+        "telefono": "12324652163546",
+        "trabajo": "Almanaque",
+        "precio": 12000.0,
+        "estado": "entregado"
+    }
+]
