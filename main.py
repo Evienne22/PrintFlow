@@ -25,6 +25,19 @@ def guardar_clientes():
 clientes = cargar_clientes()
 
 clientes_archivados = cargar_clientes_archivados()
+
+def mostrar_cliente(cliente):
+    print("Nombre:", cliente["nombre"])
+    print("Teléfono:", cliente["telefono"])
+    print("Trabajo:", cliente["trabajo"])
+    if cliente.get("precio", 0) > 0:
+        precio_formateado = f"{cliente['precio']:,.0f}".replace(",", ".")
+        print("Precio: $" + precio_formateado)
+    else:
+        print("Precio: Sin Cargar")
+    print("Estado:", cliente.get("estado", "pendiente"))
+    print("Fecha de creación:", cliente.get("fecha_creacion", "No registrado"))
+    print("Fecha de entrega:", cliente.get("fecha_entrega", "No entregado"))
     
 def pedir_telefono(mensaje):
     while True:
@@ -69,6 +82,16 @@ def validar_precio(precio):
     except ValueError:
         return False
     
+def validar_telefono(telefono):
+    if telefono.strip() =="":
+        return False   
+    if not telefono.isdigit():
+        return False
+    if len(telefono) < 7 or len(telefono) > 15:
+        return False
+    
+    return True
+
 def pedir_texto(mensaje):
     while True:
         texto = input(mensaje)
@@ -112,11 +135,12 @@ def cambiar_estado():
     if opcion_estados in estado:
         cliente["estado"] = estado[opcion_estados]
     
-    if cliente["estado"] == "entregado":
-        cliente["fecha_entrega"] = datetime.now().strftime("%d/%m/%Y")
+        if cliente["estado"] == "entregado":
+            cliente["fecha_entrega"] = datetime.now().strftime("%d/%m/%Y")
     
         guardar_clientes()
         print("Estado actualizado correctamente.")
+        
     else:
         print("Selección inválida.")
 def ver_resumen():
@@ -179,31 +203,13 @@ def buscar_cliente():
            if cliente["nombre"].lower() == nombre_buscar.lower():
             print()
             print("===========================================")
-            print("Nombre:", cliente["nombre"])
-            print("Teléfono:", cliente["telefono"])
-            print("Trabajo:", cliente["trabajo"])
-            print("Estado:", cliente.get("estado", "pendiente"))
-            
-            if cliente.get("precio",0) > 0:
-                precio_formateado = f"{cliente['precio']:,.0f}".replace(",", ".")
-                print("Precio: $" + precio_formateado)
-            else:
-                print("Precio: Sin Cargar")
+            mostrar_cliente(cliente)
             print("===========================================")
             
             encontrado = True
             break
         if not encontrado:
          print("Cliente no encontrado.")
-def validar_telefono(telefono):
-    if telefono.strip() =="":
-        return False   
-    if not telefono.isdigit():
-        return False
-    if len(telefono) < 7 or len(telefono) > 15:
-        return False
-    
-    return True
 
 def editar_cliente():
     print("Clientes Disponibles:")
@@ -224,15 +230,8 @@ def editar_cliente():
     cliente = clientes[seleccion - 1]
 
     print()
-    print("Cliente Seleccionado:")
-    print("Nombre:", cliente["nombre"])
-    print("Teléfono:", cliente["telefono"])
-    print("Trabajo:", cliente["trabajo"])
-    if cliente.get("precio", 0) > 0:
-                print("Precio: $", cliente["precio"])
-    else:
-        print("Precio: Sin Cargar")
-     
+    mostrar_cliente(cliente     )
+
     print("Estado:", cliente.get("estado", "pendiente"))
     
     nuevo_nombre= input("Ingrese el nuevo nombre: ")
@@ -283,20 +282,10 @@ def mostrar_entregados():
         if cliente.get("estado") == "entregado":
             encontrado = True
             print("--------------------------")
-            print("Nombre: " + cliente["nombre"])
-            print("Teléfono: " + cliente["telefono"])
-            print("Trabajo: " + cliente["trabajo"])
-            
-            if cliente.get("fecha_entrega"):
-                print("Fecha entrega: " + cliente["fecha_entrega"])
-                
-            if cliente.get("precio", 0) > 0:
-                precio_formateado = f"{cliente['precio']:,.0f}".replace(",", ".")
-                print("Precio: $" + precio_formateado)
-            else:
-                print("Precio: Sin Cargar")
+            mostrar_cliente(cliente)
     if not encontrado:
         print("No hay clientes entregados.")
+
 def archivar_clientes_entregados():
     print("Clientes Entregados:")
        
@@ -328,8 +317,7 @@ def archivar_clientes_entregados():
         
     print()
     print("Cliente Seleccionado:") 
-    print("Nombre:", cliente["nombre"])
-    print("Trabajo:", cliente["trabajo"])  
+    mostrar_cliente(cliente)
         
     confirmacion = input("¿Está seguro de archivar este cliente? (s/n): ")
        
@@ -351,21 +339,7 @@ def ver_clientes_archivados():
     
     for cliente in clientes_archivados:
         print("--------------------------")
-        print("Nombre:", cliente["nombre"])
-        print("Teléfono:", cliente["telefono"])
-        print("Trabajo:", cliente["trabajo"])
-        
-        if cliente.get("fecha_creacion"):
-            print("Fecha creación:", cliente["fecha_creacion"])
-        
-        if cliente.get("fecha_entrega"):
-            print("Fecha entrega: " + cliente["fecha_entrega"])
-            
-        if cliente.get("precio", 0) > 0:
-            precio_formateado = f"{cliente['precio']:,.0f}".replace(",", ".")
-            print("Precio: $" + precio_formateado)
-        else:
-            print("Precio: Sin Cargar")                   
+        mostrar_cliente(cliente)                 
 def eliminar_cliente():
     print("Clientes Disponibles:")
        
@@ -378,7 +352,7 @@ def eliminar_cliente():
         if seleccion < 1 or seleccion > len(clientes):
             print("Selección inválida.")
             return
-    
+        
     except ValueError:
         print("Ingrese un número válido.")
         return
@@ -387,8 +361,7 @@ def eliminar_cliente():
         
     print()
     print("Cliente Seleccionado:") 
-    print("Nombre:", cliente["nombre"])
-    print("Trabajo:", cliente["trabajo"])
+    mostrar_cliente(cliente)
         
     confirmacion = input("¿Está seguro de eliminar este cliente? (s/n): ")
        
@@ -446,26 +419,7 @@ while True:
         print("Lista de clientes:")
         
         for cliente in clientes:
-            
-            print("--------------------------")
-            print("Nombre: " + cliente["nombre"])
-            print("Teléfono: " + cliente["telefono"])
-            print("Trabajo: " + cliente["trabajo"])
-            
-            if cliente.get("fecha_creacion"):
-                print("Fecha creación: " + cliente["fecha_creacion"])
-                
-            print("Estado: " + cliente.get("estado", "pendiente"))
-            
-            if cliente.get("fecha_entrega"):
-                print("Fecha entrega: " + cliente["fecha_entrega"])
-            
-            if cliente.get("precio",0) > 0:
-                precio_formateado = f"{cliente['precio']:,.0f}".replace(",", ".")
-                print("Precio: $" + precio_formateado)
-            else:
-                print("Precio: Sin Cargar")
-
+            mostrar_cliente(cliente)
             print("--------------------------")
     elif opcion == "3":
         cambiar_estado()
@@ -486,4 +440,3 @@ while True:
         break
     else:
         print("Opción inválida. Por favor, seleccione una opción válida.")
-        
