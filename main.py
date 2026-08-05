@@ -121,19 +121,23 @@ def pedir_texto(mensaje):
 def cambiar_estado():
     print("Clientes Disponibles:")
     
-    for i, cliente in enumerate(clientes):
-        print(i + 1, "-", cliente["nombre"])
-    try:
-        seleccion = int(input("Seleccione el cliente: "))
-    except ValueError:
-        print("Ingrese un número válido.")
-        return
-    if seleccion < 1 or seleccion > len(clientes):
-        print("Selección inválida.")
-        return
-    cliente = clientes[seleccion - 1]
+    for cliente in clientes:
+        print(cliente["id"], "-", cliente["nombre"])
+        
+    id_buscado = int(input("Ingrese el ID del cliente: "))
     
-    print("Estado actual del cliente:", cliente.get("estado", "pendiente"))
+    cliente_encontrado = None
+    
+    for cliente in clientes:
+        if cliente ["id"] == id_buscado:
+            cliente_encontrado = cliente
+            break
+    
+    if cliente_encontrado is None:
+        print("Cliente no encontrado.")
+        return
+    
+    print("Estado actual del cliente:", cliente_encontrado.get("estado", "pendiente"))
     print("Opciones de estado:")    
     print("1. Pendiente")
     print("2. En proceso")
@@ -148,10 +152,10 @@ def cambiar_estado():
         "4": "entregado"
     }
     if opcion_estados in estado:
-        cliente["estado"] = estado[opcion_estados]
+        cliente_encontrado["estado"] = estado[opcion_estados]
     
-        if cliente["estado"] == "entregado":
-            cliente["fecha_entrega"] = datetime.now().strftime("%d/%m/%Y")
+        if cliente_encontrado["estado"] == "entregado":
+            cliente_encontrado["fecha_entrega"] = datetime.now().strftime("%d/%m/%Y")
     
         guardar_clientes()
         print("Estado actualizado correctamente.")
