@@ -233,29 +233,34 @@ def buscar_cliente():
 def editar_cliente():
     print("Clientes Disponibles:")
     
-    for i, cliente in enumerate(clientes): 
-    
-        print(i + 1, "-", cliente["nombre"])
-             
+    for cliente in clientes:
+        print(cliente["id"], "-", cliente["nombre"])
+        
     try:
-        seleccion = int(input("Seleccione el cliente: "))
-        if seleccion < 1 or seleccion > len(clientes):
-            print("Selección inválida.")
-            return
-    
+        id_buscado = int(input("Ingrese el ID del cliente: "))
+        
     except ValueError:
         print("Ingrese un número válido.")
         return
-    cliente = clientes[seleccion - 1]
+    cliente_encontrado = None
+    
+    for cliente in clientes:
+        if cliente["id"] == id_buscado:
+            cliente_encontrado = cliente
+            break
+        
+    if cliente_encontrado is None:
+        print("Cliente no encontrado.")
+        return
 
     print()
-    mostrar_cliente(cliente     )
+    mostrar_cliente(cliente_encontrado)
 
-    print("Estado:", cliente.get("estado", "pendiente"))
+    print("Estado:", cliente_encontrado.get("estado", "pendiente"))
     
     nuevo_nombre= input("Ingrese el nuevo nombre: ")
     if nuevo_nombre:
-        cliente["nombre"] = nuevo_nombre
+        cliente_encontrado["nombre"] = nuevo_nombre
         
     while True:
         nuevo_telefono = input("Ingrese el nuevo teléfono: ")
@@ -264,7 +269,7 @@ def editar_cliente():
             break
 
         elif validar_telefono(nuevo_telefono):
-            cliente["telefono"] = nuevo_telefono
+            cliente_encontrado["telefono"] = nuevo_telefono
             break
 
         else:
@@ -274,7 +279,7 @@ def editar_cliente():
     nuevo_trabajo = input("Ingrese el nuevo trabajo: ")
 
     if nuevo_trabajo:
-        cliente["trabajo"] = nuevo_trabajo
+        cliente_encontrado["trabajo"] = nuevo_trabajo
 
 
     while True:
@@ -284,7 +289,7 @@ def editar_cliente():
             break
 
         elif validar_precio(nuevo_precio):
-            cliente["precio"] = float(nuevo_precio)
+            cliente_encontrado["precio"] = float(nuevo_precio)
             break
 
         else:
