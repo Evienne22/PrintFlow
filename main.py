@@ -27,6 +27,7 @@ clientes = cargar_clientes()
 clientes_archivados = cargar_clientes_archivados()
 
 def mostrar_cliente(cliente):
+    print("ID:", cliente["id"])
     print("Nombre:", cliente["nombre"])
     print("Teléfono:", cliente["telefono"])
     print("Trabajo:", cliente["trabajo"])
@@ -91,6 +92,20 @@ def validar_telefono(telefono):
         return False
     
     return True
+
+def generar_id():
+    if clientes:
+        ids = []
+
+        for cliente in clientes:
+            if "id" in cliente:
+                ids.append(cliente["id"])
+
+        if ids:
+            return max(ids) + 1
+
+    return 1
+
 
 def pedir_texto(mensaje):
     while True:
@@ -398,6 +413,7 @@ while True:
         estado = "pendiente"
         
         cliente = {
+            "id": generar_id(),
             "nombre": nombre,
             "telefono": telefono,
             "trabajo": trabajo,
