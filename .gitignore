@@ -1,0 +1,7 @@
+# Archivos de datos locales
+clientes.json
+clientes_archivados.json
+
+# Caché de Python
+__pycache__/
+*.pyc
