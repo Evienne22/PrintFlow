@@ -168,56 +168,42 @@ def cambiar_estado():
         print("Selección inválida.")
 
 def ver_resumen():
+    
+        print("===========================================")
+        print("              RESUMEN PRINTFLOW")
+        print("===========================================")
+        
         total_clientes = len(clientes)
         total_archivados = len(clientes_archivados)
         total_historicos = total_clientes + total_archivados
-        
-        pendientes = 0
-        en_proceso = 0
-        finalizados = 0
-        entregados = 0
-        
-        ingresos = 0
-        ingresos_historicos = 0
-        
-        for cliente in clientes:
-            if cliente.get("estado") == "pendiente":
-                pendientes += 1
-            elif cliente.get("estado") == "en proceso":
-                en_proceso += 1
-            elif cliente.get("estado") == "finalizado":
-                finalizados += 1
-            elif cliente.get("estado") == "entregado":
-                entregados += 1
             
-            ingresos += cliente.get("precio", 0)
-            
-        for cliente in clientes_archivados:
-            ingresos_historicos += cliente.get("precio", 0)
-
-        ingresos_formateados = f"{ingresos:,.0f}".replace(",", ".")
-        historicos_formateados = f"{ingresos_historicos:,.0f}".replace(",", ".") 
-        total_formateados = f"{ingresos + ingresos_historicos:,.0f}".replace(",", ".")
-        print()
-        print("===========================================")
-        print("                 RESUMEN PRINTFLOW")
-        print("===========================================")
-        print("Clientes Activos:", total_clientes)
-        print("Clientes Archivados:", total_archivados)
         print("Total Histórico:", total_historicos)
-        
-        print()
-        print("Clientes pendientes:", pendientes)
-        print("Clientes en proceso:", en_proceso)
-        print("Clientes finalizados:", finalizados)
-        print("Clientes entregados:", entregados)
-        
-        print()
-        print("Ingresos activos: $" + ingresos_formateados)
-        print("Ingresos históricos: $" + historicos_formateados)
-        print("Ingresos totales: $" + total_formateados)
+        print("Total Activo:", total_clientes)
+        print("Total Archivado:", total_archivados)
+        print("Total Pendientes:", sum(1 for cliente in clientes if cliente.get("estado") == "pendiente"))
+        print("Total En Proceso:", sum(1 for cliente in clientes if cliente.get("estado") == "en proceso"))
+        print("Total Finalizados:", sum(1 for cliente in clientes if cliente.get("estado") == "finalizado"))
+        print("Total Entregados:", sum(1 for cliente in clientes if cliente.get("estado") == "entregado"))  
         print("===========================================")
- 
+        print("Ingresos Activos: $", f"{sum(cliente.get('precio', 0) for cliente in clientes):,.0f}".replace(",", "."))
+        print("Ingresos Archivados: $", f"{sum(cliente.get('precio', 0) for cliente in clientes_archivados):,.0f}".replace(",", "."))
+        print("Ingresos Totales: $", f"{sum(cliente.get('precio', 0) for cliente in clientes) + sum(cliente.get('precio', 0) for cliente in clientes_archivados):,.0f}".replace(",", "."))
+        print("===========================================")
+        print("Resumen de trabajos realizados:")
+        trabajos = {} 
+        
+        for cliente in clientes + clientes_archivados:
+            trabajo = cliente.get("trabajo", "No registrado")
+            
+            if trabajo in trabajos:
+                trabajos[trabajo] += 1
+            else:
+                trabajos[trabajo] = 1
+        print()
+        print("Trabajos realizados:")
+        for trabajo, cantidad in trabajos.items():
+            print(f"{trabajo}: {cantidad}")
+
 def buscar_cliente():
     for cliente in clientes:
         print(cliente["id"], "-", cliente["nombre"])
