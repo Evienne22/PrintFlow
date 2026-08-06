@@ -366,35 +366,41 @@ def ver_clientes_archivados():
         mostrar_cliente(cliente)                 
 def eliminar_cliente():
     print("Clientes Disponibles:")
-       
-    for i, cliente in enumerate(clientes):
-        print(i + 1, "-", cliente["nombre"])
-        
-    try:    
-        seleccion = int(input("Seleccione el cliente a eliminar: "))
-    
-        if seleccion < 1 or seleccion > len(clientes):
-            print("Selección inválida.")
-            return
+    for cliente in clientes:
+            print(cliente["id"], "-", cliente["nombre"])
+    try:
+        id_buscado = int(input("Ingrese el ID del cliente a eliminar: ")) 
         
     except ValueError:
         print("Ingrese un número válido.")
         return
-
-    cliente = clientes[seleccion - 1]
+    
+    cliente_encontrado = None
+    
+    for cliente in clientes:
+        if cliente["id"] == id_buscado:
+            cliente_encontrado = cliente
+            break
         
+    if cliente_encontrado is None:
+        print("Cliente no encontrado.")
+        return  
+    
     print()
-    print("Cliente Seleccionado:") 
-    mostrar_cliente(cliente)
-        
+    print("Cliente Seleccionado:")
+    mostrar_cliente(cliente_encontrado)
+    
     confirmacion = input("¿Está seguro de eliminar este cliente? (s/n): ")
-       
-    if confirmacion.lower() == "s":
-            del clientes[seleccion - 1]
-            guardar_clientes()
-            print("Cliente eliminado correctamente.")
+    
+    if confirmacion.lower() == "s": 
+        clientes.remove(cliente_encontrado)
+        guardar_clientes()
+        print("Cliente eliminado correctamente.")
+    
     else:
-            print("Operación cancelada.")
+        print("Operación cancelada.")        
+    
+    
 while True:
     print("==========================================")
     print("              PRINTFLOW")
