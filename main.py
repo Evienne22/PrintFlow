@@ -1,31 +1,12 @@
-import json
 from datetime import datetime
-def cargar_clientes():
-    try:
-        with open("clientes.json", "r") as archivo:
-            return json.load(archivo)
-        
-    except FileNotFoundError:
-        return []
 
-    except json.JSONDecodeError:
-        print("Error: el archivo clientes.json está dañado.")
-        return[]
-    
-def cargar_clientes_archivados():
-    try:
-        with open("clientes_archivados.json", "r") as archivo:
-            return json.load(archivo)
-    except FileNotFoundError:
-        return []
-
-def guardar_clientes_archivados():
-    with open("clientes_archivados.json", "w") as archivo:
-        json.dump(clientes_archivados, archivo, indent=4)
-        
-def guardar_clientes():
-    with open("clientes.json", "w") as archivo:
-        json.dump(clientes, archivo, indent=4)
+from datos import(
+    cargar_clientes,
+    cargar_clientes_archivados,
+    guardar_clientes,
+    guardar_clientes_archivados,
+)
+from validaciones import *
 
 clientes = cargar_clientes()
 
@@ -47,89 +28,6 @@ def mostrar_cliente(cliente):
     print("Fecha de entrega:", cliente.get("fecha_entrega", "No entregado"))
     print("Fecha estima entrega:",cliente.get("fecha_entrega_estimada","No registrada"))
     
-def pedir_telefono(mensaje):
-    while True:
-        telefono = input(mensaje)
-        if telefono.strip() == "":
-            print("El teléfono solo puede contener números.")
-        elif not telefono.isdigit():
-            print("Ingrese un número válido.")
-        else:
-            return telefono
-def pedir_precio(mensaje):
-    while True:
-        precio = input(mensaje)
-        if precio.strip() == "":
-            print("El precio no puede estar vacío.")
-            continue
-        else:
-           
-            try:
-                precio = float(precio)
-                
-                if precio < 0:
-                    print("El precio no puede ser negativo.")
-                    continue
-                return precio
-            
-            except ValueError:
-                print("Precio inválido. Por favor, ingrese un número válido.") 
-def pedir_cantidad(mensaje):
-    while True:
-        cantidad = input(mensaje)
-        
-        if cantidad.strip() == "":
-            print("La cantidad no puede estar vacía.")
-            continue
-        
-        try:
-            cantidad = int(cantidad)
-            
-            if cantidad <= 0:
-                print("La cantidad debe ser mayor a cero.")
-                continue
-        
-            return cantidad
-    
-        except ValueError:
-            print("Ingrese un número válido.")
-            
-def pedir_fecha(mensaje):
-    while True:
-        fecha = input(mensaje)
-        
-        try:
-            datetime.strptime(fecha, "%d/%m/%Y")
-            return fecha
-        
-        except ValueError:
-            print("Fecha inválida. Use el formato día/mes/año.")
-                
-def validar_precio(precio):
-    if precio.strip() == "":
-        return False
-
-    try:
-        precio = float(precio)
-
-        if precio < 0:
-            return False
-
-        return True
-
-    except ValueError:
-        return False
-    
-def validar_telefono(telefono):
-    if telefono.strip() =="":
-        return False   
-    if not telefono.isdigit():
-        return False
-    if len(telefono) < 7 or len(telefono) > 15:
-        return False
-    
-    return True
-
 def generar_id():
     if clientes:
         ids = []
@@ -146,18 +44,6 @@ def generar_id():
             return max(ids) + 1
 
     return 1
-
-
-def pedir_texto(mensaje):
-    while True:
-        texto = input(mensaje)
-
-        if texto.strip() == "":
-            print("El valor no puede estar vacío.")
-        else:
-            break
-
-    return texto
 
 def cambiar_estado():
     print("Clientes Disponibles:")
@@ -198,7 +84,7 @@ def cambiar_estado():
         if cliente_encontrado["estado"] == "entregado":
             cliente_encontrado["fecha_entrega"] = datetime.now().strftime("%d/%m/%Y")
     
-        guardar_clientes()
+        guardar_clientes(clientes)
         print("Estado actualizado correctamente.")
         
     else:
@@ -345,7 +231,7 @@ def editar_cliente():
             print("Precio inválido. Ingrese un número válido.")
 
 
-    guardar_clientes()
+    guardar_clientes(clientes)
     print("Cliente actualizado correctamente.")
     
 def mostrar_entregados():
@@ -398,9 +284,9 @@ def archivar_clientes_entregados():
         clientes.remove(cliente_encontrado)
         clientes_archivados.append(cliente_encontrado)
         
-        guardar_clientes()
+        guardar_clientes(clientes)
        
-        guardar_clientes_archivados()
+        guardar_clientes_archivados(clientes_archivados)
         print("Cliente archivado correctamente.")
 
 def ver_clientes_archivados():
@@ -442,7 +328,7 @@ def eliminar_cliente():
     
     if confirmacion.lower() == "s": 
         clientes.remove(cliente_encontrado)
-        guardar_clientes()
+        guardar_clientes(clientes)
         print("Cliente eliminado correctamente.")
     
     else:
@@ -474,7 +360,7 @@ while True:
         trabajo = pedir_texto("Ingrese el tipo de trabajo solicitado: ")
         precio = pedir_precio("Ingrese el precio del trabajo: ")
         cantidad = pedir_cantidad("Ingrese la cantidad: ")
-        fecha_entrega_estimada = pedir_fecha("Fecha estimadade entrega: ")
+        fecha_entrega_estimada = pedir_fecha("Fecha estimadade de entrega: ")
         estado = "pendiente"
         cliente = {
             "id": generar_id(),
@@ -489,7 +375,7 @@ while True:
         }
         clientes.append(cliente)
         
-        guardar_clientes()
+        guardar_clientes(clientes)
         
         print()
         
