@@ -4,14 +4,19 @@ def cargar_clientes():
     try:
         with open("clientes.json", "r") as archivo:
             return json.load(archivo)
-    except:
+        
+    except FileNotFoundError:
         return []
 
+    except json.JSONDecodeError:
+        print("Error: el archivo clientes.json está dañado.")
+        return[]
+    
 def cargar_clientes_archivados():
     try:
         with open("clientes_archivados.json", "r") as archivo:
             return json.load(archivo)
-    except:
+    except FileNotFoundError:
         return []
 
 def guardar_clientes_archivados():
@@ -31,6 +36,7 @@ def mostrar_cliente(cliente):
     print("Nombre:", cliente["nombre"])
     print("Teléfono:", cliente["telefono"])
     print("Trabajo:", cliente["trabajo"])
+    print("Cantidad:", cliente.get ("cantidad","No registrada"))
     if cliente.get("precio", 0) > 0:
         precio_formateado = f"{cliente['precio']:,.0f}".replace(",", ".")
         print("Precio: $" + precio_formateado)
@@ -39,6 +45,7 @@ def mostrar_cliente(cliente):
     print("Estado:", cliente.get("estado", "pendiente"))
     print("Fecha de creación:", cliente.get("fecha_creacion", "No registrado"))
     print("Fecha de entrega:", cliente.get("fecha_entrega", "No entregado"))
+    print("Fecha estima entrega:",cliente.get("fecha_entrega_estimada","No registrada"))
     
 def pedir_telefono(mensaje):
     while True:
@@ -67,7 +74,37 @@ def pedir_precio(mensaje):
             
             except ValueError:
                 print("Precio inválido. Por favor, ingrese un número válido.") 
-                      
+def pedir_cantidad(mensaje):
+    while True:
+        cantidad = input(mensaje)
+        
+        if cantidad.strip() == "":
+            print("La cantidad no puede estar vacía.")
+            continue
+        
+        try:
+            cantidad = int(cantidad)
+            
+            if cantidad <= 0:
+                print("La cantidad debe ser mayor a cero.")
+                continue
+        
+            return cantidad
+    
+        except ValueError:
+            print("Ingrese un número válido.")
+            
+def pedir_fecha(mensaje):
+    while True:
+        fecha = input(mensaje)
+        
+        try:
+            datetime.strptime(fecha, "%d/%m/%Y")
+            return fecha
+        
+        except ValueError:
+            print("Fecha inválida. Use el formato día/mes/año.")
+                
 def validar_precio(precio):
     if precio.strip() == "":
         return False
@@ -190,7 +227,9 @@ def ver_resumen():
         print("Ingresos Totales: $", f"{sum(cliente.get('precio', 0) for cliente in clientes) + sum(cliente.get('precio', 0) for cliente in clientes_archivados):,.0f}".replace(",", "."))
         print("===========================================")
         print("Resumen de trabajos realizados:")
+        
         trabajos = {} 
+        unidades = {}
         
         for cliente in clientes + clientes_archivados:
             trabajo = cliente.get("trabajo", "No registrado")
@@ -199,10 +238,24 @@ def ver_resumen():
                 trabajos[trabajo] += 1
             else:
                 trabajos[trabajo] = 1
+                
+            cantidad = cliente.get("cantidad", 0)
+        
+            if trabajo in unidades:
+                unidades[trabajo] += cantidad
+            else:
+                unidades[trabajo] = cantidad
+            
+            
         print()
         print("Trabajos realizados:")
         for trabajo, cantidad in trabajos.items():
             print(f"{trabajo}: {cantidad}")
+            
+        print()
+        print("Producción realizada: ")
+        for trabajo, cantidad in unidades.items():
+            print(f"{trabajo}: {cantidad} unidades")
 
 def buscar_cliente():
     for cliente in clientes:
@@ -420,8 +473,9 @@ while True:
         telefono = pedir_telefono("Ingrese el número de teléfono del cliente: ")
         trabajo = pedir_texto("Ingrese el tipo de trabajo solicitado: ")
         precio = pedir_precio("Ingrese el precio del trabajo: ")
+        cantidad = pedir_cantidad("Ingrese la cantidad: ")
+        fecha_entrega_estimada = pedir_fecha("Fecha estimadade entrega: ")
         estado = "pendiente"
-        
         cliente = {
             "id": generar_id(),
             "nombre": nombre,
@@ -429,7 +483,9 @@ while True:
             "trabajo": trabajo,
             "precio": precio,  
             "estado": estado,
-            "fecha_creacion": datetime.now().strftime("%d/%m/%Y")
+            "cantidad": cantidad,
+            "fecha_creacion": datetime.now().strftime("%d/%m/%Y"),
+            "fecha_entrega_estimada": fecha_entrega_estimada,
         }
         clientes.append(cliente)
         
