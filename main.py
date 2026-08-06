@@ -214,21 +214,26 @@ def ver_resumen():
         print("===========================================")
  
 def buscar_cliente():
-        nombre_buscar = input("Ingrese el nombre del cliente: ")
+    for cliente in clientes:
+        print(cliente["id"], "-", cliente["nombre"])
     
-        encontrado = False
+    busqueda = input("Ingrese el ID o el nombre del cliente: ").lower()
     
-        for cliente in clientes:
-           if cliente["nombre"].lower() == nombre_buscar.lower():
-            print()
-            print("===========================================")
+    clientes_encontrados = None
+    
+    if busqueda.isdigit():
+        id_buscado = int(busqueda)
+        clientes_encontrados = [cliente for cliente in clientes if cliente["id"] == id_buscado]
+    else:
+        clientes_encontrados = [cliente for cliente in clientes if busqueda in cliente["nombre"].lower()]
+
+    if clientes_encontrados:
+        print("Clientes encontrados:")
+        for cliente in clientes_encontrados:
+            print("--------------------------")
             mostrar_cliente(cliente)
-            print("===========================================")
-            
-            encontrado = True
-            break
-        if not encontrado:
-         print("Cliente no encontrado.")
+    else:
+        print("No se encontró ningún cliente.")
 
 def editar_cliente():
     print("Clientes Disponibles:")
