@@ -100,6 +100,10 @@ def generar_id():
         for cliente in clientes:
             if "id" in cliente:
                 ids.append(cliente["id"])
+                
+        for cliente in clientes_archivados:
+            if "id" in cliente:
+                ids.append(cliente["id"])
 
         if ids:
             return max(ids) + 1
@@ -162,6 +166,7 @@ def cambiar_estado():
         
     else:
         print("Selección inválida.")
+
 def ver_resumen():
         total_clientes = len(clientes)
         total_archivados = len(clientes_archivados)
@@ -328,38 +333,37 @@ def archivar_clientes_entregados():
             print("No hay clientes entregados para archivar.")
             return
     
-    for i, cliente in enumerate(clientes_entregados):
-                    print(i + 1, "-", cliente["nombre"])
+    for cliente in clientes_entregados:
+        print(cliente["id"], "-", cliente["nombre"])
+        
+    id_buscado = int(input("Ingrese el ID del cliente a archivar: "))
     
-    try:    
-        seleccion = int(input("Seleccione el cliente a archivar: "))
+    cliente_encontrado = None
     
-        if seleccion < 1 or seleccion > len(clientes_entregados):
-            print("Selección inválida.")
-            return
-    
-    except ValueError:
-        print("Ingrese un número válido.")
-        return
+    for cliente in clientes_entregados:
+        if cliente["id"] == id_buscado:
+            cliente_encontrado = cliente
+            break
 
-    cliente = clientes_entregados[seleccion - 1]
-        
+    if cliente_encontrado is None:
+        print("Cliente no encontrado.")
+        return
+    
     print()
-    print("Cliente Seleccionado:") 
-    mostrar_cliente(cliente)
-        
+    print("Cliente Seleccionado:")
+    mostrar_cliente(cliente_encontrado)
+    
     confirmacion = input("¿Está seguro de archivar este cliente? (s/n): ")
-       
+    
     if confirmacion.lower() == "s":
-            clientes_archivados.append(cliente)
-            guardar_clientes_archivados()
+        clientes.remove(cliente_encontrado)
+        clientes_archivados.append(cliente_encontrado)
         
-            clientes.remove(cliente)
-            guardar_clientes()
-            
-            print("Cliente archivado correctamente.")
-    else:
-            print("Operación cancelada.")
+        guardar_clientes()
+       
+        guardar_clientes_archivados()
+        print("Cliente archivado correctamente.")
+
 def ver_clientes_archivados():
     print("Clientes Archivados:")
     if not clientes_archivados:
